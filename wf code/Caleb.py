@@ -18,4 +18,7 @@ elif sys.platform.startswith("darwin"):
 else:
     dwf = cdll.LoadLibrary("libdwf.so")
 
-
+# Allocates space for a string and gets the version type
+version = create_string_buffer(16)
+dwf.FDwfGetVersion(version)
+print("DWF Version: "+str(version.value))
