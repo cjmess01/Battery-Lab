@@ -24,11 +24,12 @@ dwf.FDwfGetVersion(version)
 print("DWF Version: "+str(version.value))
 
 
+# enumerate connected devices
+dwf.FDwfEnum()
+#print("Number of Devices: "+str(cDevice.value))
 
+
+# Prints error messages
 errorMSG = create_string_buffer(512)
 dwf.FDwfGetLastErrorMsg(errorMSG)
-
-    
-  
-
 print(str(errorMSG.value))
