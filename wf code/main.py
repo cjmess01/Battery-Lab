@@ -1,6 +1,6 @@
 """
-    Caleb's samplescript
-    Author: Caleb Messerly
+    Main Driver for ADP Signal Acquisition and Data Transformation
+    Author: Caleb Messerly and Shane Vanderhagen
 
     Make sure this is in the wf code folder on the ADP3450
 
@@ -22,7 +22,3 @@ else:
 version = create_string_buffer(16)
 dwf.FDwfGetVersion(version)
 print("DWF Version: "+str(version.value))
-
-
-
-
