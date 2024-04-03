@@ -22,3 +22,9 @@ else:
 version = create_string_buffer(16)
 dwf.FDwfGetVersion(version)
 print("DWF Version: "+str(version.value))
+
+
+errorMSG = create_string_buffer(512)
+dwf.FDwfGetLastError(errorMSG)
+
+print(errorMSG)
