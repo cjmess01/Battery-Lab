@@ -9,7 +9,7 @@
 
 from ctypes import *
 from dwfconstants import *
-import math
+import mathl
 import time
 import sys
 import numpy
