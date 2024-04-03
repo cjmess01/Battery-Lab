@@ -24,7 +24,11 @@ dwf.FDwfGetVersion(version)
 print("DWF Version: "+str(version.value))
 
 
-errorMSG = create_string_buffer(512)
-dwf.FDwfGetLastError(errorMSG.value)
 
-print(errorMSG)
+errorMSG = create_string_buffer(512)
+dwf.FDwfGetLastErrorMsg(errorMSG)
+
+    
+  
+
+print(str(errorMSG.value))
