@@ -30,8 +30,9 @@ print("DWF Version: "+str(version.value))
 
 # Enumerate connected devices
 cDevice = c_int()
-dwf.FDwfEnum(enumfilterAll, byref(cDevice))
+success = dwf.FDwfEnum(c_int(), byref(cDevice))
 print("Number of Devices: "+str(cDevice.value))
+print(f"!!: {success}")
 
 
 
