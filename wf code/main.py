@@ -28,11 +28,11 @@ version = create_string_buffer(16)
 dwf.FDwfGetVersion(version)
 print("DWF Version: "+str(version.value))
 
-# Enumerate connected devices
-cDevice = c_int()
-success = dwf.FDwfEnum(c_int(), byref(cDevice))
-print("Number of Devices: "+str(cDevice.value))
-print(f"!!: {success}")
+# # Enumerate connected devices
+# cDevice = c_int()
+# success = dwf.FDwfEnum(c_int(), byref(cDevice))
+# print("Number of Devices: "+str(cDevice.value))
+
 
 
 
