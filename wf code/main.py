@@ -37,6 +37,8 @@ print("Number of Devices: "+str(cDevice.value))
 
 
 # Prints error messages, if they exist
-dwf.FDwfGetLastErrorMsg(szerr)
+value = dwf.FDwfGetLastErrorMsg(szerr)
+print(value)
+print("printing last error: ")
 if szerr[0] != b'\0':
     print(str(szerr.value))
