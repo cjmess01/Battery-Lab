@@ -40,8 +40,8 @@ fParity = c_int(0)
 
 # configure the I2C/TWI, default settings
 dwf.FDwfDigitalUartRateSet(hdwf, c_double(9600)) # 9.6kHz
-dwf.FDwfDigitalUartTxSet(hdwf, c_int(0)) # TX = DIO-0
-dwf.FDwfDigitalUartRxSet(hdwf, c_int(1)) # RX = DIO-1
+dwf.FDwfDigitalUartTxSet(hdwf, c_int(15)) # TX = DIO-0
+dwf.FDwfDigitalUartRxSet(hdwf, c_int(14)) # RX = DIO-1
 dwf.FDwfDigitalUartBitsSet(hdwf, c_int(8)) # 8 bits
 dwf.FDwfDigitalUartParitySet(hdwf, c_int(0)) # 0 no parity, 1 even, 2 odd, 3 mark (high), 4 space (low)
 dwf.FDwfDigitalUartStopSet(hdwf, c_double(1)) # 1 bit stop length
