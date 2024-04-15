@@ -66,7 +66,6 @@ tsec = time.perf_counter()  + 10 # receive for 10 seconds
 print("Receiving on RX...")
 while time.perf_counter() < tsec:
     time.sleep(0.01)
-    print("A")
     dwf.FDwfDigitalUartRx(hdwf, rgRX, c_int(sizeof(rgRX)-1), byref(cRX), byref(fParity)) # read up to 8k chars at once
     if cRX.value > 0:
         rgRX[cRX.value] = 0 # add zero ending
