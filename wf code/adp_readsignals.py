@@ -16,17 +16,20 @@ version = create_string_buffer(16)
 dwf.FDwfGetVersion(version)
 print("DWF Version: "+str(version.value))
 
-# Opens  device
+# prevent temperature drift
+dwf.FDwfParamSet(DwfParamOnClose, c_int(0)) # 0 = run, 1 = stop, 2 = shutdown
+
 hdwf = c_int()
 print("Opening first device")
-dwf.FDwfDeviceOpen(c_int(-1), byref(hdwf))
-
-if hdwf.value == 0:
-    print("failed to open device")
+if dwf.FDwfDeviceOpen(-1, byref(hdwf)) != 1 or hdwf.value == hdwfNone.value:
     szerr = create_string_buffer(512)
     dwf.FDwfGetLastErrorMsg(szerr)
-    print(str(szerr.value))
+    print(szerr.value)
+    print("failed to open device")
     quit()
+
+dwf.FDwfDeviceAutoConfigureSet(hdwf, c_int(0)) # 0 = the device will only be configured when FDwf###Configure is called
+
 
 
 
