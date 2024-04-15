@@ -75,3 +75,6 @@ while time.perf_counter() < tsec:
         print("Parity error {}".format(fParity.value))
 
 dwf.FDwfDeviceCloseAll()
+
+
+
