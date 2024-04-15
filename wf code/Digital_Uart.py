@@ -40,8 +40,8 @@ fParity = c_int(0)
 
 # configure the I2C/TWI, default settings
 dwf.FDwfDigitalUartRateSet(hdwf, c_double(9600)) # 9.6kHz
-dwf.FDwfDigitalUartTxSet(hdwf, c_int(15)) # TX = DIO-0
-dwf.FDwfDigitalUartRxSet(hdwf, c_int(14)) # RX = DIO-1
+dwf.FDwfDigitalUartTxSet(hdwf, c_int(15)) # TX = DIO-15
+dwf.FDwfDigitalUartRxSet(hdwf, c_int(14)) # RX = DIO-14
 dwf.FDwfDigitalUartBitsSet(hdwf, c_int(8)) # 8 bits
 dwf.FDwfDigitalUartParitySet(hdwf, c_int(0)) # 0 no parity, 1 even, 2 odd, 3 mark (high), 4 space (low)
 dwf.FDwfDigitalUartStopSet(hdwf, c_double(1)) # 1 bit stop length
@@ -60,10 +60,12 @@ tsec = time.perf_counter()  + 10 # receive for 10 seconds
 print("Receiving on RX...")
 while time.perf_counter() < tsec:
     time.sleep(0.01)
+    print("A")
     dwf.FDwfDigitalUartRx(hdwf, rgRX, c_int(sizeof(rgRX)-1), byref(cRX), byref(fParity)) # read up to 8k chars at once
     if cRX.value > 0:
         rgRX[cRX.value] = 0 # add zero ending
         print(rgRX.value.decode(), end = '', flush=True)
+        print("B")
     if fParity.value != 0:
         print("Parity error {}".format(fParity.value))
 
