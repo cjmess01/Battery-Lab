@@ -1,5 +1,7 @@
 from ctypes import *
 import sys
+
+from sqlalchemy import true
 from dwfconstants import *
 import math, time
 
@@ -44,21 +46,31 @@ dwf.FDwfDeviceAutoConfigureSet(hdwf, c_int(0))
 
 print("Configure and start first analog out channel")
 # Sets it to channel 1 with default carrier node as source. 
-print("A")
 dwf.FDwfAnalogOutNodeEnableSet(hdwf, c_int(0), AnalogOutNodeCarrier, c_int(1))
 # Sets channel 0 to create a sine wave
-print("B")
 dwf.FDwfAnalogOutNodeFunctionSet(hdwf, c_int(0), AnalogOutNodeCarrier, funcSine)
 # Sets frequency of the given function wave
-print("C")
 dwf.FDwfAnalogOutNodeFrequencySet(hdwf, c_int(0), AnalogOutNodeCarrier, c_double(1e6))
 # Sets amplitude
-print("D")
 dwf.FDwfAnalogOutNodeAmplitudeSet(hdwf, c_int(0), AnalogOutNodeCarrier, c_double(0.9))
 # Starts the instrument
-print("E")
 dwf.FDwfAnalogOutConfigure(hdwf, c_int(0), c_int(1))
 
+# Weirdly, if you have the following code, it works. But without 
+# Something to do after the configure command, it fails out!
+sts = c_ubyte(0)
+print("Entering try catch 1")
+try:
+    while True:
+        time.sleep(1)
+        dwf.FDwfAnalogOutStatus(hdwf, c_int(0), byref(sts))
+        print(sts)
+        continue
+
+except KeyboardInterrupt:
+    pass
+
+    
 
 # capture up to 32Ki if samples
 nBufMax = c_int()
