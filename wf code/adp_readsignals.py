@@ -44,10 +44,10 @@ print("B")
 dwf.FDwfAnalogOutNodeFunctionSet(hdwf, c_int(0), AnalogOutNodeCarrier, funcSine)
 # Sets frequency of the given function wave
 print("C")
-dwf.FDwfAnalogOutNodeFrequencySet(hdwf, c_int(0), AnalogOutNodeCarrier, c_double(500000))
+dwf.FDwfAnalogOutNodeFrequencySet(hdwf, c_int(0), AnalogOutNodeCarrier, c_double(1e6))
 # Sets amplitude
 print("D")
-dwf.FDwfAnalogOutNodeAmplitudeSet(hdwf, c_int(0), AnalogOutNodeCarrier, c_double(3.5))
+dwf.FDwfAnalogOutNodeAmplitudeSet(hdwf, c_int(0), AnalogOutNodeCarrier, c_double(0.9))
 # Starts the instrument
 print("E")
 dwf.FDwfAnalogOutConfigure(hdwf, c_int(0), c_int(1))
