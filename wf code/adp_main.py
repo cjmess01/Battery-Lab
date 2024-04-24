@@ -1,30 +1,33 @@
 """
-   DWF Python Example
-   Author:  Digilent, Inc.
-   Revision:  2018-07-23
+    Main Driver for ADP Signal Acquisition and Data Transformation
+    Author: Caleb Messerly and Shane Vanderhagen
 
-   Requires:                       
-       Python 2.7, 3
+    Make sure this is in the wf code folder on the ADP3450
+
 """
 
 from ctypes import *
-import math
 import sys
 import time
 
+
+# Loads the correct linker library for the platform
 if sys.platform.startswith("win"):
-    dwf = cdll.LoadLibrary("dwf.dll")
+    dwf = cdll.dwf
 elif sys.platform.startswith("darwin"):
     dwf = cdll.LoadLibrary("/Library/Frameworks/dwf.framework/dwf")
 else:
     dwf = cdll.LoadLibrary("libdwf.so")
 
-hdwf = c_int()
+# Allocates space for a string and gets the version type
+version = create_string_buffer(16)
+dwf.FDwfGetVersion(version)
+print("DWF Version: "+str(version.value))
 
+# Opens  device
+hdwf = c_int()
 print("Opening first device")
 dwf.FDwfDeviceOpen(c_int(-1), byref(hdwf))
-# device configuration of index 3 (4th) for Analog Discovery has 16kS digital-in/out buffer
-#dwf.FDwfDeviceConfigOpen(c_int(-1), c_int(3), byref(hdwf)) 
 
 if hdwf.value == 0:
     print("failed to open device")
@@ -33,6 +36,9 @@ if hdwf.value == 0:
     print(str(szerr.value))
     quit()
 
+
+
+# UART stuff
 print("Configuring UART...")
 
 cRX = c_int(0)
@@ -60,7 +66,6 @@ tsec = time.perf_counter()  + 10 # receive for 10 seconds
 print("Receiving on RX...")
 while time.perf_counter() < tsec:
     time.sleep(0.01)
-    print("A")
     dwf.FDwfDigitalUartRx(hdwf, rgRX, c_int(sizeof(rgRX)-1), byref(cRX), byref(fParity)) # read up to 8k chars at once
     if cRX.value > 0:
         rgRX[cRX.value] = 0 # add zero ending
@@ -70,3 +75,6 @@ while time.perf_counter() < tsec:
         print("Parity error {}".format(fParity.value))
 
 dwf.FDwfDeviceCloseAll()
+
+
+
